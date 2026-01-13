@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<html lang = "zh-CN">
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <title>王建新 - 征婚</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 蓝色滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e8f4f8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6ba3d9, #a8d5ff);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #5a92c8, #97c4ee);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f8fbff 0%, #ffffff 50%, #f0f8ff 100%);
+            color: #2c3e50;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 16px 24px;
+            display: grid;
+            grid-template-rows: 60px 1fr 30px;
+            gap: 10px;
+        }
+
+        /* 头部 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(107, 163, 217, 0.2);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6ba3d9, #a8d5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav a {
+            color: #6ba3d9;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #4a90e2;
+        }
+
+        /* 主体内容 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 16px;
+            overflow: hidden;
+        }
+
+        /* 左侧个人简介 */
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid rgba(107, 163, 217, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 12px;
+            border: 3px solid #6ba3d9;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(107, 163, 217, 0.15);
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .quick-info {
+            background: white;
+            border: 1px solid rgba(107, 163, 217, 0.15);
+            border-radius: 12px;
+            padding: 14px;
+            flex-shrink: 0;
+        }
+
+        .quick-info-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #6ba3d9;
+            margin-bottom: 9px;
+            text-align: center;
+        }
+
+        .quick-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .quick-info-item {
+            text-align: center;
+            padding: 8px;
+            background: rgba(107, 163, 217, 0.05);
+            border-radius: 6px;
+        }
+
+        .quick-info-label {
+            color: #95a5a6;
+            font-size: 11px;
+            display: block;
+        }
+
+        .quick-info-value {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-top: 3px;
+            font-size: 13px; /* 稍微调小字体以适应较长职业名称 */
+            word-break: break-all;
+        }
+
+        /* 右侧详细信息 */
+        .details-panel {
+            background: white;
+            border: 1px solid rgba(107, 163, 217, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section {
+            border-bottom: 1px solid rgba(107, 163, 217, 0.1);
+            padding-bottom: 12px;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .section-icon {
+            font-size: 22px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* 基本信息网格 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(107, 163, 217, 0.05), rgba(168, 213, 255, 0.05));
+            border: 1px solid rgba(107, 163, 217, 0.15);
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #95a5a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 16px; /* 字体调小以防溢出 */
+            font-weight: 700;
+            color: #6ba3d9;
+            word-break: break-all;
+        }
+
+        .info-desc {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+
+        /* 兴趣标签 */
+        .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .interest-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1.5px solid #d4e8f7;
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-size: 15px;
+            color: #6ba3d9;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .interest-badge:hover {
+            border-color: #6ba3d9;
+            background: rgba(107, 163, 217, 0.05);
+        }
+
+        /* 择偶要求列表 */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #2c3e50;
+            padding: 8px 10px;
+            background: rgba(107, 163, 217, 0.03);
+            border-radius: 6px;
+            border-left: 3px solid #6ba3d9;
+        }
+
+        .requirement-item::before {
+            content: '✓';
+            color: #6ba3d9;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        /* 联系方式 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .contact-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(107, 163, 217, 0.08), rgba(168, 213, 255, 0.08));
+            border: 1.5px solid rgba(107, 163, 217, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .contact-button:hover {
+            border-color: #6ba3d9;
+            background: rgba(107, 163, 217, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 32px;
+        }
+
+        .contact-label {
+            font-size: 14px; /* 字体稍微调小 */
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .contact-hint {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding-top: 6px;
+            border-top: 2px solid rgba(107, 163, 217, 0.2);
+            font-size: 13px;
+            color: #95a5a6;
+            line-height: 1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+            }
+
+            .container {
+                height: auto;
+                padding: 15px;
+                grid-template-rows: auto;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .details-panel {
+                max-height: none;
+            }
+
+            .info-grid,
+            .requirements-grid,
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class = "container">
+    <!-- 头部 -->
+    <header class = "header">
+        <div class = "logo">锋</div>
+        <nav class = "nav">
+            <a href = "#about">关于</a>
+            <a href = "#interests">爱好</a>
+            <a href = "#requirements">要求</a>
+            <a href = "#contact">联系</a>
+        </nav>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class = "main-content">
+        <!-- 左侧栏 -->
+        <aside class = "profile-sidebar">
+            <div class = "profile-card">
+                <div class = "avatar-wrapper">
+                    <!-- 保持原有头像图片链接，如有需要可自行替换 src -->
+                    <img src = "https://s41.ax1x.com/2025/12/24/pZGc29K.jpg" alt = "头像" class = "avatar">
+                </div>
+                <h1 class = "name">王建新</h1>
+                <p class = "tagline">热爱生活 | 探索世界 | 记录美好</p>
+            </div>
+
+            <div class = "quick-info">
+                <div class = "quick-info-title">快速信息</div>
+                <div class = "quick-info-grid">
+                    <div class = "quick-info-item">
+                        <span class = "quick-info-label">年龄</span>
+                        <div class = "quick-info-value">22岁</div>
+                    </div>
+                    <div class = "quick-info-item">
+                        <span class = "quick-info-label">身高</span>
+                        <div class = "quick-info-value">168cm</div>
+                    </div>
+                    <div class = "quick-info-item">
+                        <span class = "quick-info-label">学历</span>
+                        <div class = "quick-info-value">幼儿园</div>
+                    </div>
+                    <div class = "quick-info-item">
+                        <span class = "quick-info-label">职业</span>
+                        <div class = "quick-info-value">黄色网站分析师</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 右侧详情 -->
+        <section class = "details-panel">
+            <!-- 详细信息 -->
+            <div class = "section" id = "about">
+                <div class = "section-header">
+                    <span class = "section-icon">👤</span>
+                    <h2 class = "section-title">详细信息</h2>
+                </div>
+                <div class = "info-grid">
+                    <div class = "info-box">
+                        <div class = "info-label">年龄</div>
+                        <div class = "info-value">22</div>
+                        <div class = "info-desc">岁</div>
+                    </div>
+                    <div class = "info-box">
+                        <div class = "info-label">身高</div>
+                        <div class = "info-value">168</div>
+                        <div class = "info-desc">cm</div>
+                    </div>
+                    <div class = "info-box">
+                        <div class = "info-label">体重</div>
+                        <div class = "info-value">100</div>
+                        <div class = "info-desc">kg</div>
+                    </div>
+                    <div class = "info-box">
+                        <div class = "info-label">学历</div>
+                        <div class = "info-value">幼儿园</div>
+                        <div class = "info-desc">Edu</div>
+                    </div>
+                    <div class = "info-box">
+                        <div class = "info-label">职业</div>
+                        <div class = "info-value">黄色网站分析师</div>
+                        <div class = "info-desc">Job</div>
+                    </div>
+                    <div class = "info-box">
+                        <div class = "info-label">性格</div>
+                        <div class = "info-value">羞涩</div>
+                        <div class = "info-desc">Shy</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 兴趣爱好 -->
+            <div class = "section" id = "interests">
+                <div class = "section-header">
+                    <span class = "section-icon">🎯</span>
+                    <h2 class = "section-title">兴趣爱好</h2>
+                </div>
+                <div class = "interests-container">
+                    <span class = "interest-badge">📸 摄影</span>
+                    <span class = "interest-badge">🏃 长跑</span>
+                    <span class = "interest-badge">✈️ 旅行</span>
+                    <span class = "interest-badge">💻 编程</span>
+                    <span class = "interest-badge">📚 阅读</span>
+                    <span class = "interest-badge">🎬 电影</span>
+                    <span class = "interest-badge">🌍 地理</span>
+                    <span class = "interest-badge">🎵 音乐</span>
+                </div>
+            </div>
+
+            <!-- 择偶要求 -->
+            <div class = "section" id = "requirements">
+                <div class = "section-header">
+                    <span class = "section-icon">💝</span>
+                    <h2 class = "section-title">择偶要求</h2>
+                </div>
+                <div class = "requirements-grid">
+                    <div class = "requirement-item">年龄 20-28 岁</div>
+                    <div class = "requirement-item">身高 160-175 cm</div>
+                    <div class = "requirement-item">学历本科以上</div>
+                    <div class = "requirement-item">性格开朗积极</div>
+                    <div class = "requirement-item">热爱生活</div>
+                    <div class = "requirement-item">独立有主见</div>
+                    <div class = "requirement-item">善良温暖</div>
+                    <div class = "requirement-item">爱好相似</div>
+                    <div class = "requirement-item">珍视感情</div>
+                </div>
+            </div>
+
+            <!-- 联系方式 -->
+            <div class = "section" id = "contact">
+                <div class = "section-header">
+                    <span class = "section-icon">📬</span>
+                    <h2 class = "section-title">联系方式</h2>
+                </div>
+
+                <div class = "contact-grid">
+                    <!-- 抖音 -->
+                    <a href = "https://www.douyin.com/search/W3.8" target = "_blank" class = "contact-button">
+                        <svg t = "1765985641415" class = "icon" viewBox = "0 0 1024 1024" version = "1.1"
+                             xmlns = "http://www.w3.org/2000/svg" p-id = "6266" width = "70" height = "70"
+                        >
+                            <path d = "M0 0m184.32 0l655.36 0q184.32 0 184.32 184.32l0 655.36q0 184.32-184.32 184.32l-655.36 0q-184.32 0-184.32-184.32l0-655.36q0-184.32 184.32-184.32Z"
+                                  fill = "#111111" p-id = "6267"
+                            ></path>
+                            <path d = "M204.27776 670.59712a246.25152 246.25152 0 0 1 245.97504-245.97504v147.57888a98.49856 98.49856 0 0 0-98.38592 98.38592c0 48.34304 26.14272 100.352 83.54816 100.352 3.81952 0 93.55264-0.88064 93.55264-77.19936V134.35904h157.26592a133.31456 133.31456 0 0 0 133.12 132.99712l-0.13312 147.31264a273.152 273.152 0 0 1-142.62272-38.912l-0.06144 317.98272c0 146.00192-124.24192 224.77824-241.14176 224.77824-131.74784 0.03072-231.1168-106.56768-231.1168-247.92064z"
+                                  fill = "#FF4040" p-id = "6268"
+                            ></path>
+                            <path d = "M164.92544 631.23456a246.25152 246.25152 0 0 1 245.97504-245.97504v147.57888a98.49856 98.49856 0 0 0-98.38592 98.38592c0 48.34304 26.14272 100.352 83.54816 100.352 3.81952 0 93.55264-0.88064 93.55264-77.19936V94.99648h157.26592a133.31456 133.31456 0 0 0 133.12 132.99712l-0.13312 147.31264a273.152 273.152 0 0 1-142.62272-38.912l-0.06144 317.98272c0 146.00192-124.24192 224.77824-241.14176 224.77824-131.74784 0.03072-231.1168-106.56768-231.1168-247.92064z"
+                                  fill = "#00F5FF" p-id = "6269"
+                            ></path>
+                            <path d = "M410.91072 427.58144c-158.8224 20.15232-284.44672 222.72-154.112 405.00224 120.40192 98.47808 373.68832 41.20576 380.70272-171.85792l-0.17408-324.1472a280.7296 280.7296 0 0 0 142.88896 38.62528V261.2224a144.98816 144.98816 0 0 1-72.8064-54.82496 135.23968 135.23968 0 0 1-54.70208-72.45824h-123.66848l-0.08192 561.41824c-0.11264 78.46912-130.9696 106.41408-164.18816 30.2592-83.18976-39.77216-64.37888-190.9248 46.31552-192.57344z"
+                                  fill = "#FFFFFF" p-id = "6270"
+                            ></path>
+                        </svg>
+                        <span class = "contact-label">抖音 (W3.8)</span>
+                        <span class = "contact-hint">搜索关注</span>
+                    </a>
+
+                    <!-- QQ -->
+                    <a href = "tencent://message/?uin=2241497734&Site=&Menu=yes" target = "_blank"
+                       class = "contact-button"
+                    >
+                        <svg t = "1765985687890" class = "icon" viewBox = "0 0 1024 1024" version = "1.1"
+                             xmlns = "http://www.w3.org/2000/svg" p-id = "8114" width = "70" height = "70"
+                        >
+                            <path d = "M511.09761 957.257c-80.159 0-153.737-25.019-201.11-62.386-24.057 6.702-54.831 17.489-74.252 30.864-16.617 11.439-14.546 23.106-11.55 27.816 13.15 20.689 225.583 13.211 286.912 6.767v-3.061z"
+                                  fill = "#FAAD08" p-id = "8115"
+                            ></path>
+                            <path d = "M496.65061 957.257c80.157 0 153.737-25.019 201.11-62.386 24.057 6.702 54.83 17.489 74.253 30.864 16.616 11.439 14.543 23.106 11.55 27.816-13.15 20.689-225.584 13.211-286.914 6.767v-3.061z"
+                                  fill = "#FAAD08" p-id = "8116"
+                            ></path>
+                            <path d = "M497.12861 474.524c131.934-0.876 237.669-25.783 273.497-35.34 8.541-2.28 13.11-6.364 13.11-6.364 0.03-1.172 0.542-20.952 0.542-31.155C784.27761 229.833 701.12561 57.173 496.64061 57.162 292.15661 57.173 209.00061 229.832 209.00061 401.665c0 10.203 0.516 29.983 0.547 31.155 0 0 3.717 3.821 10.529 5.67 33.078 8.98 140.803 35.139 276.08 36.034h0.972z"
+                                  fill = "#000000" p-id = "8117"
+                            ></path>
+                            <path d = "M860.28261 619.782c-8.12-26.086-19.204-56.506-30.427-85.72 0 0-6.456-0.795-9.718 0.148-100.71 29.205-222.773 47.818-315.792 46.695h-0.962C410.88561 582.017 289.65061 563.617 189.27961 534.698 185.44461 533.595 177.87261 534.063 177.87261 534.063 166.64961 563.276 155.56661 593.696 147.44761 619.782 108.72961 744.168 121.27261 795.644 130.82461 796.798c20.496 2.474 79.78-93.637 79.78-93.637 0 97.66 88.324 247.617 290.576 248.996a718.01 718.01 0 0 1 5.367 0C708.80161 950.778 797.12261 800.822 797.12261 703.162c0 0 59.284 96.111 79.783 93.637 9.55-1.154 22.093-52.63-16.623-177.017"
+                                  fill = "#000000" p-id = "8118"
+                            ></path>
+                            <path d = "M434.38261 316.917c-27.9 1.24-51.745-30.106-53.24-69.956-1.518-39.877 19.858-73.207 47.764-74.454 27.875-1.224 51.703 30.109 53.218 69.974 1.527 39.877-19.853 73.2-47.742 74.436m206.67-69.956c-1.494 39.85-25.34 71.194-53.24 69.956-27.888-1.238-49.269-34.559-47.742-74.435 1.513-39.868 25.341-71.201 53.216-69.974 27.909 1.247 49.285 34.576 47.767 74.453"
+                                  fill = "#FFFFFF" p-id = "8119"
+                            ></path>
+                            <path d = "M683.94261 368.627c-7.323-17.609-81.062-37.227-172.353-37.227h-0.98c-91.29 0-165.031 19.618-172.352 37.227a6.244 6.244 0 0 0-0.535 2.505c0 1.269 0.393 2.414 1.006 3.386 6.168 9.765 88.054 58.018 171.882 58.018h0.98c83.827 0 165.71-48.25 171.881-58.016a6.352 6.352 0 0 0 1.002-3.395c0-0.897-0.2-1.736-0.531-2.498"
+                                  fill = "#FAAD08" p-id = "8120"
+                            ></path>
+                            <path d = "M467.63161 256.377c1.26 15.886-7.377 30-19.266 31.542-11.907 1.544-22.569-10.083-23.836-25.978-1.243-15.895 7.381-30.008 19.25-31.538 11.927-1.549 22.607 10.088 23.852 25.974m73.097 7.935c2.533-4.118 19.827-25.77 55.62-17.886 9.401 2.07 13.75 5.116 14.668 6.316 1.355 1.77 1.726 4.29 0.352 7.684-2.722 6.725-8.338 6.542-11.454 5.226-2.01-0.85-26.94-15.889-49.905 6.553-1.579 1.545-4.405 2.074-7.085 0.242-2.678-1.834-3.786-5.553-2.196-8.135"
+                                  fill = "#000000" p-id = "8121"
+                            ></path>
+                            <path d = "M504.33261 584.495h-0.967c-63.568 0.752-140.646-7.504-215.286-21.92-6.391 36.262-10.25 81.838-6.936 136.196 8.37 137.384 91.62 223.736 220.118 224.996H506.48461c128.498-1.26 211.748-87.612 220.12-224.996 3.314-54.362-0.547-99.938-6.94-136.203-74.654 14.423-151.745 22.684-215.332 21.927"
+                                  fill = "#FFFFFF" p-id = "8122"
+                            ></path>
+                            <path d = "M323.27461 577.016v137.468s64.957 12.705 130.031 3.91V591.59c-41.225-2.262-85.688-7.304-130.031-14.574"
+                                  fill = "#EB1C26" p-id = "8123"
+                            ></path>
+                            <path d = "M788.09761 432.536s-121.98 40.387-283.743 41.539h-0.962c-161.497-1.147-283.328-41.401-283.744-41.539l-40.854 106.952c102.186 32.31 228.837 53.135 324.598 51.926l0.96-0.002c95.768 1.216 222.4-19.61 324.6-51.924l-40.855-106.952z"
+                                  fill = "#EB1C26" p-id = "8124"
+                            ></path>
+                        </svg>
+                        <span class = "contact-label">QQ</span>
+                        <span class = "contact-hint">2241497734</span>
+                    </a>
+
+                    <!-- 微信 (点击复制) -->
+                    <a href = "javascript:void(0)" onclick = "copyWeChat()" class = "contact-button">
+                        <svg viewBox="00 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="70" height="70">
+                            <path d="M666.3 556.9c-8.7 0-15.8-7.1-15.8-15.8s7.1-15.8 15.8-15.8 15.8 7.1 15.8 15.8-7.1 15.8-15.8 15.8z m-190.3 0c-8.7 0-15.8-7.1-15.8-15.8s7.1-15.8 15.8-15.8 15.8 7.1 15.8 15.8-7.1 15.8-15.8 15.8z m-21.3 66.6c-24.7 0-46.3-6.6-64.6-17.4l-50.4 26.2 13.8-47.7c-24.7-24.7-40.2-58.1-40.2-95.3 0-71.5 66.6-129.6 148.9-129.6 80.7 0 145.7 56.6 148.7 126.2 1.7-0.2 3.4-0.2 5.2-0.2 71.5 0 129.6 56.6 129.6 126.2 0 34.4-13.8 65.4-36.1 88.9l11.2 40.2-41.9-21.9c-16.1 8.7-34.4 13.8-53.5 13.8-42.7 0-80.7-22.5-102.8-56.6-16.5 6.9-34.6 10.7-53.9 10.7z m407.6-63.8c20.8-20.8 33.9-48.8 33.9-80 0-62.1-53.4-112.6-119.1-112.6-65.7 0-119.1 50.5-119.1 112.6 0 62.1 53.4 112.6 119.1 112.6 17.3 0 33.6-3.4 48.5-9.5l38.6 20.1-10.3-35.2z" fill="#09BB07"></path>
+                        </svg>
+                        <span class = "contact-label">微信</span>
+                        <span class = "contact-hint">点击复制</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class = "footer">
+        © 2025 王建新 · 真诚寻找人生伴侣
+    </footer>
+</div>
+
+<script>
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // 微信号复制功能
+    function copyWeChat() {
+        const weChatId = 'wjx0308-';
+
+        // 尝试使用现代API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(weChatId).then(() => {
+                alert('微信号 ' + weChatId + ' 已复制到剪贴板！');
+            }).catch(err => {
+                console.error('复制失败: ', err);
+                fallbackCopy(weChatId);
+            });
+        } else {
+            // 后备方案
+            fallbackCopy(weChatId);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";  // 避免滚动到底部
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if(successful) {
+                alert('微信号 ' + text + ' 已复制到剪贴板！');
+            } else {
+                alert('复制失败，请手动添加：' + text);
+            }
+        } catch (err) {
+            alert('复制失败，请手动添加：' + text);
+        }
+
+        document.body.removeChild(textArea);
+    }
+</script>
+</body>
+</html>
+```
